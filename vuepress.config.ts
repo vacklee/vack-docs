@@ -5,15 +5,14 @@ export default defineUserConfig({
   title: 'Vack',
   description: '基于 vue3 的前端进阶级框架',
   theme: defaultTheme({
+    editLink: false,
+    lastUpdatedText: '更新时间',
+    contributorsText: '作者',
     repo: 'vacklee/create-vack',
     navbar: [
       {
         text: '文档',
         link: '/docs/'
-      },
-      {
-        text: 'vue3文档',
-        link: 'https://cn.vuejs.org/'
       }
     ],
     sidebar: {
@@ -21,19 +20,18 @@ export default defineUserConfig({
         '/docs/',
         '/docs/getting-started.md',
         '/docs/enviroment-configuration.md',
-        '/docs/route.md',
-        '/docs/page.md',
         '/docs/component.md',
+        '/docs/page.md',
+        '/docs/route.md',
         '/docs/layout.md',
         '/docs/style.md',
-        '/docs/store.md',
         '/docs/api.md',
         '/docs/mock.md',
+        '/docs/store.md',
         '/docs/i18n.md',
-        '/docs/eslint.md',
-        '/docs/commit.md'
+        // '/docs/eslint.md',
+        // '/docs/commit.md'
       ]
-    },
-    editLink: false
+    }
   })
 })
