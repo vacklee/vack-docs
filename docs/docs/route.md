@@ -1,56 +1,91 @@
 ---
 title: 路由
+sidebarDepth: 1
 ---
 
 # 路由
 
-Vack 中，除了可以手动定义路由，还会为所有页面自动生成路由。
+Vack 中的路由包含 `手动定义` 和 `自动生成` 两部分。
+手动定义即和常规项目一样，可以手动编写 `vue-router` 的路由配置；
+自动生成是指 Vack 会按一定的规则为每个页面自动生成其对应的路由。
 
 ## 手动定义
 
-`src/router/routes.js` 是路由的配置文件，可以在该文件中手动定义任意路由。
-路由的定义方式，可查阅 [vue-router](https://router.vuejs.org/zh/) 的官方文档。
+Vack 中配置路由的文件在 `src/router/routes.js`，和常规项目一样可以在这里手动编写路由：
+```js
+// src/router/routes.js
+
+import loadPageRoutes from './utils/loadPageRoutes';
+
+const routes = [
+  // 可以在此处手动编写路由
+];
+
+// Vack会自动为每个页面创建路由
+routes.push(...loadPageRoutes());
+
+export default routes;
+```
+
+> 路由的定义方式，可查阅 [vue-router](https://router.vuejs.org/zh/) 的官方文档。
 
 ## 自动生成
 
-Vack会为所有的页面生成一个对应的路由。
+Vack 会按一定规则为存放在 `src/pages` 目录下的所有 页面 / 子页面 生成其对应的路由。
 
-### 路径转换
+默认的，Vack 会使用 **页面目录的名称** + **父页面目录名称**（如有）生成页面的 `path`，生成规则：
++ 目录名转小写中横线连接格式，多级路由使用 `/` 连接；
++ 目录名为`Index`的会默认省略。
 
-默认的，页面的目录名称会转换为路由的路径，转换关系：
-
-```
-Index/index.vue   -> /
-Home/index.vue    -> /home
-AboutMe/index.vue -> /about-me
-```
-
-支持多层级嵌套：
-
-```
-ParentPage/Index/index.vue    -> /parent-page
-ParentPage/SubPageA/index.vue -> /parent-page/sub-page-a
-ParentPage/SubPageB/index.vue -> /parent-page/sub-page-b
+```sh
+# 路径默认省略了 index 结尾的部分
+pages/Index/index.vue #-> /
+# 目录名称单个单词，转为小写
+pages/Home/index.vue #-> /home
+# 多个单词转为小写，以中横线连接
+pages/AboutMe/index.vue #-> /about-me
+# 多级路由使用 / 连接
+pages/ParentPage/SubPageA/index.vue #-> /parent-page/sub-page-a
+# 多级路由也会省略 index 结尾的部分
+pages/ParentPage/SubPageA/Index/index.vue #-> /parent-page/sub-page-a
 ```
 
 ### 配置
 
-可以在页面目录下定义 `index.js` 文件，以在生成路由时，覆盖一些默认操作。
-
-`index.js` 文件对外暴露一个 json 配置：
+页面目录下可以创建 `index.js` 文件用以对该页面做补充说明，在生成路由时可以覆盖默认行为。
+`pages/**/index.js`需要默认导出一个配置对象，有效的配置字段如下：
 
 ```js
+// pages/**/index.js
+
 export default {
+  // 生成路由时，覆盖默认的路径
   path: '/',
+  // 可以声明params参数，和路由配置的path属性一样
+  path: '/:id',
+
+  // 页面默认使用 <script setup>，如果需要在顶层使用 await
+  // 则需要显式声明该字段为 true，在生成路由时 Vack 会做额外的处理
+  suspense: true,
+
+  // 为生成的路由附加其他属性，如生命周期钩子等
+  extendRoute() {
+    return {
+      beforeEnter() {},
+    },
+  },
+
+  // .... 可以添加其他任意自定义属性
+  // 除以上属性，其他的属性可以使用路由对象的 meta 进行访问
+  showFooter: true,
 };
 ```
 
-目前支持的配置：
+```vue
+<script setup>
+import { useRoute } from 'vue-router';
 
-配置|类型|作用
-:-|:-|:-
-path|String|定义路由的 path 属性，可以覆盖默认的路径
-suspense|Boolean|如果 `<script setup>` 顶层使用了 `await`，需要配置为 `true`
-extendRoute|Function|该函数返回一个 json 以配置路由的其他属性
-
-`index.js` 返回的配置数据，也存在于 `$route.meta` 对象中。
+const route = useRoute();
+console.log(route.meta.showFooter); // true
+</script>
+```

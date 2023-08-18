@@ -4,13 +4,18 @@ title: 快速上手
 
 # 快速上手
 
-## 依赖环境
+## 环境
+
+使用 Vack 需依赖以下环境：
 
 + [Node.js v16.13.2+](https://nodejs.org/)
 + [pnpm](https://pnpm.io/zh/)（可选）
 
-## 脚手架安装
+## 脚手架
 
+Vack 提供了一个项目创建工具 —— `create-vack` 。
+
+1. 使用 `create-vack` 快速创建 Vack 项目：
 <CodeGroup>
   <CodeGroupItem title="PNPM">
 
@@ -35,8 +40,7 @@ yarn create vack
   </CodeGroupItem>
 </CodeGroup>
 
-跟随指引指定项目名称、预设：
-
+2. 跟随指引输入项目名称并指定预设：
 ```bash
 ✔ 项目名称： … vack-project
 ✔ 是否需要接口Mock： … yes
@@ -51,7 +55,7 @@ yarn create vack
     开发调试：npm run dev
 ```
 
-也可以通过命令行直接指定项目名称、预设
+3. 也可以通过命令行直接指定项目名称、预设
 
 <CodeGroup>
   <CodeGroupItem title="PNPM">
@@ -84,14 +88,14 @@ yarn create vack my-app --preset mock,i18n
   </CodeGroupItem>
 </CodeGroup>
 
-当前支持的预设：
+当前支持以下预设：
 |预设|说明|
 |:-|:-|
-|mock|项目带有 Mock 接口的能力
-|i18n|项目带有国际化的能力
-|eslint|项目带有 ESLint 配置
-|lint-staged|在提交代码时进行代码格式检查
-|lint-commit|git commit 提交信息规范化
+|mock|带有接口模拟能力
+|i18n|带有国际化能力
+|eslint|带有 ESLint 配置
+|lint-staged|提交时要求代码通过规范校验
+|lint-commit|提交时要求commit信息通过规范校验
 
 ## 调试命令
 <CodeGroup>

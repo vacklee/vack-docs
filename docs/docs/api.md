@@ -1,5 +1,6 @@
 ---
 title: 接口
+sidebarDepth: 1
 ---
 
 # 接口
@@ -60,39 +61,55 @@ export const apiUrls = {
 };
 ```
 
++ 键名就是接口的名称，键值是接口的请求地址；
++ 接口声明支持层级嵌套。
+
 ## 使用
 
+1. 在需要使用接口的地方引入 api 对象：
 ```js
-// 引入 api 对象
 import api from '@/api';
+```
 
-// 直接调用，返回的是一个 Promise 对象
-api.login();
-// 嵌套层级
-api.user.getUserInfo();
+2. 一般调用：
+```js
+api.login()
+  .then((data) => {})
+  .catch((err) => {});
+```
 
-// 传递参数
-// 无论接口是 GET / POST，传参方式是统一的
-// 对于 GET 接口，Vack会将参数携带在 query 中
-// 对于 POST 接口，Vack会将参数携带在 body 中
-api.user.login({ username: '' });
++ 接口请求成功时走向 `then` 分支，异常时走向 `catch` 分支；
++ 接口请求仅在正常发送且响应数据的状态码是`codeOK`时视为请求成功；
++ 即使接口请求正常发送，但响应数据的状态码不是`codeOK`，也视为请求异常；
++ `then`分支接收的参数，是响应数据格式中`code` / `data` / `msg`中的`data`部分；
++ `catch`分支接收的`err`参数是一个`Error`对象的实例，其`message`就是响应数据格式中的`msg`，
+响应数据的`code`可以通过`err.code`访问。
+```js
+// 调用层级嵌套的接口
+api.user.getUserInfo()
+  .then((data) => {})
+  .catch((err) => {});
+```
+
+3. 接口传参：
+```js
+api.login({ username: '' });
 api.user.updateUserInfo({ username: '' });
+```
++ 无论接口是 GET / POST，传参方式是统一的；
++ 对于 GET 接口，Vack 会将参数携带在 query 中；
++ 对于 POST 接口，Vack 会将参数携带在 body 中。
 
-// 附加请求头
-api.user.login({}, { 'content-type': 'application/json'});
-// 附加 axios({}) 的其他参数
+4. 使用第二个参数添加请求头：
+```js
+api.user.login({}, {
+  'content-type': 'application/json',
+});
+```
+
+5. 使用第三个参数添加其他 `axios` 函数支持的参数：
+```js
 api.user.login({}, {}, { timeout: 60000 });
-
-// 成功 与 异常
-api.user.login()
-  .then((data) => {
-    // 当接口调用成功，且响应数据的状态码(code)等于 codeOK 时，会走该分支
-    // data 参数就是响应数据中的 data
-  })
-  .catch((err) => {
-    // 当接口调用异常，或调用成功但状态码(code)不为 codeOK 时，会走该分支
-    // err 是一个 Error 实例，err.code 即是响应数据的状态码(code)
-  });
 ```
 
 ## 中间件
