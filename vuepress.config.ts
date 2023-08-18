@@ -1,7 +1,7 @@
 import { defineUserConfig, defaultTheme } from 'vuepress'
 
 export default defineUserConfig({
-  base: '/vack/',
+  base: '/vack-docs/',
   lang: 'zh-CN',
   title: 'Vack',
   description: '基于 vue3 的前端进阶级框架',
