@@ -1,0 +1,1 @@
+import{_ as t,o as c,c as o,a as e,b as a}from"./app-ab2049dd.js";const r={},s=e("h1",{id:"commit规范",tabindex:"-1"},[e("a",{class:"header-anchor",href:"#commit规范","aria-hidden":"true"},"#"),a(" Commit规范")],-1),i=[s];function m(n,_){return c(),o("div",null,i)}const h=t(r,[["render",m],["__file","commit.html.vue"]]);export{h as default};

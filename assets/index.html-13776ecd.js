@@ -1,0 +1,1 @@
+const e=JSON.parse('{"key":"v-8daa1a0e","path":"/","title":"","lang":"zh-CN","frontmatter":{"home":true,"actions":[{"text":"快速上手","link":"/docs/","type":"primary"}]},"headers":[],"git":{"updatedTime":1692092132000,"contributors":[{"name":"leexiaohui","email":"1287338537","commits":1}]},"filePathRelative":"README.md"}');export{e as data};

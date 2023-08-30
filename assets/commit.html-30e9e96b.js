@@ -1,0 +1,1 @@
+const t=JSON.parse('{"key":"v-fffbbdb2","path":"/docs/commit.html","title":"Commit规范","lang":"zh-CN","frontmatter":{"title":"Commit规范"},"headers":[],"git":{"updatedTime":1692092132000,"contributors":[{"name":"leexiaohui","email":"1287338537","commits":1}]},"filePathRelative":"docs/commit.md"}');export{t as data};
