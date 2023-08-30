@@ -8,7 +8,7 @@ title: 快速上手
 
 使用 Vack 需依赖以下环境：
 
-+ [Node.js v16.13.2+](https://nodejs.org/)
++ [Node.js v16.14.2+](https://nodejs.org/)
 + [pnpm](https://pnpm.io/zh/)（可选）
 
 ## 脚手架
